@@ -1,0 +1,4 @@
+interface:
+  display_name: "xLLM CNPX/CNPerf 性能分析"
+  short_description: "独立采集并分析 xLLM 模型模块的 CNPX/CNPerf 数据"
+  default_prompt: "使用 $xllm-performance-analysis 独立采集并分析 xLLM 指定模型模块的性能，输出 CNPerf report、CSV 和 JSON。"

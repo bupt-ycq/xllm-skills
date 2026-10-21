@@ -1,0 +1,4 @@
+interface:
+  display_name: "xLLM Triton 算子开发"
+  short_description: "为 xLLM 创建、三轮优化并接入 MLU Triton 算子"
+  default_prompt: "使用 $xllm-triton-kernel-dev 将 xLLM 指定代码实现为 MLU Triton 算子，完成至少三轮有效优化、精度验证和接入。"

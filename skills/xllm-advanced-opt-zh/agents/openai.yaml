@@ -1,0 +1,4 @@
+interface:
+  display_name: "xLLM 高级性能优化编排"
+  short_description: "串联模型分析、性能评测、设备剖析与 Triton 优化"
+  default_prompt: "使用 $xllm-advanced-opt-zh 编排 xLLM 模型性能分析、优化实现和端到端验证。"

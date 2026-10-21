@@ -1,0 +1,10 @@
+{
+  "recurrent": {"accent":"#278d87","strong":"#187c77","pale":"#e8f7f3","ink":"#075d56","label":"递归 / 线性注意力"},
+  "attention": {"accent":"#e88a15","strong":"#b65f00","pale":"#fff5e4","ink":"#865008","label":"检索 / 稀疏注意力"},
+  "moe": {"accent":"#83bd3e","strong":"#527f1c","pale":"#f1f8e8","ink":"#3e6028","label":"专家网络"},
+  "residual": {"accent":"#7c78e9","strong":"#6962ce","pale":"#f0efff","ink":"#50439b","label":"残差读写 / 主干混合"},
+  "memory": {"accent":"#c2599c","strong":"#ac3d86","pale":"#fff0f6","ink":"#93305e","label":"条件记忆 / 查表"},
+  "vision": {"accent":"#558ac0","strong":"#396fa6","pale":"#edf4fc","ink":"#28527e","label":"视觉 / 辅助生成"},
+  "cache": {"accent":"#cf7182","strong":"#a94559","pale":"#fff5f6","ink":"#973d50","label":"跨步状态 / 缓存"},
+  "neutral": {"accent":"#8a98ac","strong":"#52637a","pale":"#f1f4f8","ink":"#415168","label":"输入输出 / 通用操作"}
+}

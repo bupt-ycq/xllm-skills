@@ -1,0 +1,39 @@
+<!-- 通用排版样例，符号表示虚构的教学拓扑，不是任何目标模型的事实。 -->
+<section id="overview">
+  <div class="section-head"><div><div class="section-number">01 / GLOBAL DATA FLOW</div><h2>整体计算与层调度</h2><p class="sub">以本次核实的参数、层号和配置填入，不从样张推断模型结构。</p></div></div>
+  <div class="legend"><span class="theme-recurrent">递归记忆</span><span class="theme-attention">注意力检索</span><span class="theme-moe">专家计算</span><span class="theme-residual">残差混合</span></div>
+  <div class="grid2">
+    <div class="card"><h3>主数据流</h3><div class="node theme-neutral"><strong>输入</strong><span class="shape">[T,D]</span></div><div class="arrow">↓</div><div class="stack-box"><div class="stack-label"><span>经证据核实的层组</span><span>× N</span></div><div class="node theme-residual"><strong>Residual Read</strong></div><div class="arrow">↓</div><div class="node theme-recurrent"><strong>Recurrent Module</strong></div><div class="arrow">↓</div><div class="node theme-residual"><strong>Residual Write → Expert Sublayer</strong></div></div><div class="arrow">↓</div><div class="node theme-neutral"><strong>输出</strong></div></div>
+    <div class="card"><h3>层类型</h3><div class="layer-grid" data-layer-grid data-inspector="layer-inspector"><button class="theme-recurrent" data-layer-info="示意层A：此处由真实层配置生成。"><strong>Layer A</strong><small>递归型</small></button><button class="theme-attention" data-layer-info="示意层B：此处由真实层配置生成。"><strong>Layer B</strong><small>检索型</small></button></div><div id="layer-inspector" class="inspector">点击层查看说明；所有事实写入静态HTML。</div><div class="note">为特殊注入点单独注明作用范围。</div></div>
+  </div>
+</section>
+<section id="operator">
+  <div class="section-head"><div><div class="section-number">02 / PARALLEL COMPUTATION</div><h2>模块分支与汇合</h2><p class="sub">这是一种通用排版方式，必须按目标模型的真实DAG重排。</p></div></div>
+  <div class="node theme-recurrent"><strong>模块输入 x</strong><span class="shape">[T,D]</span></div><div class="arrow">↓<small>并行分支</small></div>
+  <div class="grid3">
+    <div class="card"><h3>内容分支</h3><div class="node theme-recurrent"><strong>Projection</strong><span class="shape">按实际维度标注</span></div><div class="arrow">↓</div><div class="node theme-recurrent"><strong>Content operation</strong><span class="shape">Q / K / V 的逻辑布局</span></div><div class="formula">只放属于内容支路的局部公式</div></div>
+    <div class="card"><h3>门控分支</h3><div class="node theme-recurrent"><strong>Gate projection</strong></div><div class="arrow">↓</div><div class="node theme-recurrent"><strong>Activation</strong><span class="shape">Gate 与输出的广播关系</span></div><p class="sub">门控送往下方明确的乘法节点，不串入内容投影。</p></div>
+    <div class="card"><h3>状态分支</h3><div class="cache"><strong>历史状态</strong><p>写明谁产生、谁读取、何时更新与精度。</p></div></div>
+  </div><div class="arrow">↓<small>在明确的算子处汇合</small></div><div class="node theme-recurrent"><strong>Aggregation → × Output Gate</strong></div>
+  <div class="grid2" style="margin-top:18px"><div class="formula">公式由核实的 forward 推导；符号和轴在此定义。</div><div class="cache"><strong>状态生命周期</strong><p>区分固定递归状态、随历史增长的KV、未完成池化块与当前激活。</p></div></div>
+  <div class="card" style="margin-top:18px"><h3>输出短链 · 确实串行的步骤</h3><div class="flow-row"><div class="node theme-recurrent"><strong>Gated Output</strong><span class="shape">[T,H,d]</span></div><div class="arrow">→</div><div class="node theme-recurrent"><strong>Output Projection</strong></div><div class="arrow">→</div><div class="node theme-residual"><strong>Residual Write</strong></div></div></div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="diagram" aria-label="局部残差依赖图">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 250" role="img">
+        <title>虚构局部残差示意，操作与旁路共同进入加法</title>
+        <defs><marker id="detail-local-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#48556a"/></marker></defs>
+        <g font-family="Arial, sans-serif" font-size="18" text-anchor="middle">
+          <rect x="25" y="35" width="155" height="60" rx="8" class="theme-residual" style="fill:var(--theme-pale);stroke:var(--theme-accent)"/><text x="102" y="71" class="theme-residual" style="fill:var(--theme-ink)">Residual Input</text>
+          <rect x="245" y="35" width="180" height="60" rx="8" class="theme-recurrent" style="fill:var(--theme-pale);stroke:var(--theme-accent)"/><text x="335" y="71" class="theme-recurrent" style="fill:var(--theme-ink)">Sublayer F</text>
+          <circle cx="335" cy="190" r="20" class="theme-residual" style="fill:var(--theme-pale);stroke:var(--theme-accent)"/><text x="335" y="196" class="theme-residual" style="fill:var(--theme-ink)">+</text>
+        </g>
+        <g fill="none" stroke="#48556a" stroke-width="2" marker-end="url(#detail-local-arrow)">
+          <path d="M180 65H242"/><path d="M335 95V168"/><path d="M102 95V190H313"/><path d="M357 190H500"/>
+        </g>
+      </svg>
+    </div>
+    <div class="card"><h3>局部图与旁侧说明</h3><div class="formula">Y = X + F(X)</div><p>交叉依赖在小图内保留；形状、公式及边界放在旁侧。手机上局部图可以横向滚动，文字保持可读。</p><p class="sub">这是虚构的组件示意。目标模型的残差参数化须重新核对。</p></div>
+  </div>
+  <details class="disclosure"><summary>补充配置与层来源</summary><div class="table-wrap"><table><thead><tr><th>字段</th><th>来源</th></tr></thead><tbody><tr><td>此处由目标配置填入</td><td>固定版本配置或 forward</td></tr></tbody></table></div></details>
+  <p class="source">来源：目标模型的固定版本官方配置与forward。</p>
+</section>

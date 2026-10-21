@@ -1,0 +1,4 @@
+interface:
+  display_name: "xLLM 模型分析优化"
+  short_description: "分析 xLLM 模型结构并优化计算、通信与执行路径"
+  default_prompt: "使用 $xllm-model-analysis-opt 分析指定 xLLM 模型实现，输出有证据的优化结论与后续步骤。"

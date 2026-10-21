@@ -1,0 +1,4 @@
+interface:
+  display_name: "模型结构海报与详解"
+  short_description: "核实模型结构，生成可离线浏览和导出的 HTML 架构海报与逐模块详解"
+  default_prompt: "使用 $model-architecture-html 为指定模型生成整体结构海报与结构详解，保存为独立 HTML 文件。"

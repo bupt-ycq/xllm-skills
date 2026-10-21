@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "plugin": "xllm-advanced-opt",
+  "required_skills": [
+    "xllm-model-analysis-opt",
+    "xllm-performance-analysis",
+    "xllm-performance-evaluate",
+    "xllm-triton-kernel-dev"
+  ],
+  "skills": [
+    {
+      "name": "xllm-advanced-opt-zh",
+      "path": "skills/xllm-advanced-opt-zh",
+      "role": "orchestration",
+      "order": 0,
+      "standalone": true,
+      "invoke_when": "需要串联模型分析、端到端评测、设备侧归因和实现验证的综合优化任务"
+    },
+    {
+      "name": "xllm-model-analysis-opt",
+      "path": "skills/xllm-model-analysis-opt",
+      "role": "model-analysis",
+      "order": 10,
+      "standalone": true,
+      "invoke_when": "分析或优化模型结构、计算复用、循环、数据处理、拷贝、同步和通信"
+    },
+    {
+      "name": "model-architecture-html",
+      "path": "skills/model-architecture-html",
+      "role": "model-architecture-visualization",
+      "order": 15,
+      "standalone": true,
+      "invoke_when": "需要调研大模型结构并生成或更新可离线阅读的 HTML 架构海报与模块详解；不用于模型移植或性能压测"
+    },
+    {
+      "name": "xllm-performance-evaluate",
+      "path": "skills/xllm-performance-evaluate",
+      "role": "service-evaluation",
+      "order": 20,
+      "standalone": true,
+      "invoke_when": "对运行中的 OpenAI 兼容服务测量 TTFT、TPOT、ITL、时延和吞吐"
+    },
+    {
+      "name": "xllm-performance-analysis",
+      "path": "skills/xllm-performance-analysis",
+      "role": "device-profiling",
+      "order": 30,
+      "standalone": true,
+      "invoke_when": "使用 CNPX/CNPerf 采集或导出全模型及指定模块的设备侧性能数据"
+    },
+    {
+      "name": "xllm-triton-kernel-dev",
+      "path": "skills/xllm-triton-kernel-dev",
+      "role": "triton-kernel",
+      "order": 40,
+      "standalone": true,
+      "invoke_when": "证据证明需要创建、优化和接入 xLLM MLU Triton Kernel"
+    }
+  ]
+}

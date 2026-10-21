@@ -1,0 +1,4 @@
+interface:
+  display_name: "xLLM 性能评测"
+  short_description: "自动选择 EvalScope 或内置脚本评测推理服务性能"
+  default_prompt: "使用 $xllm-performance-evaluate 对运行中的 OpenAI 兼容推理服务进行性能评测，并输出 EvalScope 指标。"
